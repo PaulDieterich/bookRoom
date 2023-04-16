@@ -1,0 +1,28 @@
+
+{
+  "groupId": "de.die.openAPI",
+  "artifactId": "api",
+  "additionalModelTypeAnnotations": "@lombok.Builder @lombok.NoArgsConstructor @lombok.AllArgsConstructor",
+  "additionalProperties": {
+    "useTags": true
+  },
+  "apiPackage": "de.die.openAPI.api",
+  "apiSuffix": "Api",
+  "dateLibrary": "java8",
+  "generatorName": "spring",
+  "hideGenerationTimestamp": true,
+  "interfaceOnly": true,
+  "modelNameSuffix": "Dto",
+  "modelPackage": "de.die.openAPI.model",
+  "openApiNullable": false,
+  "serviceInterface": false,
+  "snapshotVersion": true,
+  "supportingFilesToGenerate": [
+    "ApiUtil.java"
+  ],
+  "typeMappings": {
+    "multipartFile": "org.springframework.web.multipart.MultipartFile"
+  },
+  "useSpringBoot3": true,
+  "useBeanValidation": true
+}

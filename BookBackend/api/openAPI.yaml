@@ -1,0 +1,840 @@
+openapi: "3.0.3"
+info:
+  title: "BookBackend API"
+  description: "BookBackend API"
+  version: "1.0.0"
+servers:
+  - url: "https://BookBackend"
+paths:
+  /media:
+    get:
+      tags:
+        - "Media"
+      summary: "GET media"
+      operationId: "getAllMedia"
+      responses:
+        "200":
+          $ref: "#/components/responses/MediaList"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /media/findByType:
+    get:
+      tags:
+        - "Media"
+      summary: "GET media/findByType"
+      operationId: "findByType"
+      parameters:
+        - name: "type"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          $ref: "#/components/responses/MediaList"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /cd:
+    get:
+      tags:
+        - "CD"
+      summary: "GET cd"
+      operationId: "getAllCD"
+      responses:
+        "200":
+          $ref: "#/components/responses/CdList"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+    post:
+        tags:
+            - "CD"
+        summary: "PUT cd"
+        operationId: "CreateCd"
+        requestBody:
+            $ref: "#/components/requestBodies/CreateCd"
+        responses:
+            "200":
+              $ref: "#/components/responses/Cd"
+            "400":
+              $ref: "#/components/responses/BadRequest"
+            "401":
+              $ref: "#/components/responses/Unauthorized"
+        security:
+            - prod: [ ]
+  /cd/{cdId}:
+    get:
+      tags:
+        - "CD"
+      summary: "GET cd/{id}"
+      operationId: "getCdById"
+      parameters:
+        - $ref: "#/components/parameters/cdId"
+      responses:
+        "200":
+          $ref: "#/components/responses/Cd"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+    put:
+        tags:
+            - "CD"
+        summary: "PUT cd/{id}"
+        operationId: "updateCd"
+        parameters:
+            - $ref: "#/components/parameters/cdId"
+        requestBody:
+            $ref: "#/components/requestBodies/UpdateCd"
+        responses:
+            "200":
+              $ref: "#/components/responses/Cd"
+            "400":
+              $ref: "#/components/responses/BadRequest"
+            "401":
+              $ref: "#/components/responses/Unauthorized"
+        security:
+            - prod: [ ]
+    delete:
+        tags:
+            - "CD"
+        summary: "DELETE cd/{id}"
+        operationId: "deleteCD"
+        parameters:
+            - $ref: "#/components/parameters/cdId"
+        responses:
+            "200":
+              description: "OK"
+            "401":
+              $ref: "#/components/responses/Unauthorized"
+        security:
+            - prod: [ ]
+  /books:
+    get:
+      tags:
+        - "Books"
+      summary: "GET books"
+      operationId: "getAll"
+      responses:
+        "200":
+            $ref: "#/components/responses/BookList"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+    post:
+      tags:
+        - "Books"
+      summary: "POST books"
+      operationId: "createBook"
+      requestBody:
+         $ref: "#/components/requestBodies/CreateBook"
+      responses:
+        "201":
+          $ref: "#/components/responses/Book"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+      security:
+        - prod: []
+  /books/{bookId}:
+    get:
+      tags:
+        - "Books"
+      summary: "GET books/{id}"
+      operationId: "getBooksById"
+      parameters:
+        - $ref: "#/components/parameters/bookId"
+      responses:
+          "200":
+            $ref: "#/components/responses/Book"
+          "400":
+            $ref: "#/components/responses/BadRequest"
+          "401":
+            $ref: "#/components/responses/Unauthorized"
+    put:
+        tags:
+          - "Books"
+        summary: "PUT books/{id}"
+        operationId: "updateBook"
+        parameters:
+          - $ref: "#/components/parameters/bookId"
+        requestBody:
+            $ref: "#/components/requestBodies/UpdateUser"
+        responses:
+          "200":
+            $ref: "#/components/responses/Book"
+          "400":
+            $ref: "#/components/responses/BadRequest"
+          "401":
+            $ref: "#/components/responses/Unauthorized"
+        security:
+          - prod: [ ]
+    delete:
+        tags:
+          - "Books"
+        summary: "DELETE books/{id}"
+        operationId: "deleteBook"
+        parameters:
+            - $ref: "#/components/parameters/bookId"
+        responses:
+          "200":
+            description: "OK"
+          "401":
+            $ref: "#/components/responses/Unauthorized"
+        security:
+          - prod: [ ]
+  /books/findByAuthor:
+    get:
+      tags:
+        - "Books"
+      summary: "GET books/findByAuthor"
+      operationId: "findByAuthor"
+      parameters:
+          - $ref: "#/components/parameters/authorId"
+      responses:
+        "200":
+          $ref: "#/components/responses/Book"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /books/findByLanguage:
+    get:
+      tags:
+        - "Books"
+      summary: "GET books/findByLanguage"
+      operationId: "findByLanguage"
+      parameters:
+        - name: "languageId"
+          in: "query"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          $ref: "#/components/responses/Book"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /authors:
+      get:
+        tags:
+            - "Authors"
+        summary: "GET authors"
+        operationId: "getAllAuthors"
+        responses:
+          "200":
+            $ref: "#/components/responses/AuthorList"
+          "400":
+            $ref: "#/components/responses/BadRequest"
+          "401":
+            $ref: "#/components/responses/Unauthorized"
+      post:
+          tags:
+              - "Authors"
+          summary: "POST authors"
+          operationId: "createAuthor"
+          requestBody:
+              $ref: "#/components/requestBodies/CreateAuthor"
+          responses:
+            "201":
+              $ref: "#/components/responses/CreateAuthor"
+            "400":
+              $ref: "#/components/responses/BadRequest"
+            "401":
+              $ref: "#/components/responses/Unauthorized"
+          security:
+            - prod: [ ]
+  /authors/{authorId}:
+        get:
+            tags:
+                - "Authors"
+            summary: "GET authors/{id}"
+            operationId: "getAuthorById"
+            parameters:
+              - $ref: "#/components/parameters/authorId"
+            responses:
+              "200":
+                $ref: "#/components/responses/Author"
+              "400":
+                $ref: "#/components/responses/BadRequest"
+              "401":
+                $ref: "#/components/responses/Unauthorized"
+        put:
+            tags:
+                - "Authors"
+            summary: "PUT authors/{id}"
+            operationId: "updateAuthor"
+            parameters:
+              - $ref: "#/components/parameters/authorId"
+            requestBody:
+                  $ref: "#/components/requestBodies/UpdateAuthor"
+            responses:
+                "200":
+                  $ref: "#/components/responses/Author"
+                "400":
+                  $ref: "#/components/responses/BadRequest"
+                "401":
+                  $ref: "#/components/responses/Unauthorized"
+            security:
+              - prod: [ ]
+        delete:
+            tags:
+                - "Authors"
+            summary: "DELETE authors/{id}"
+            operationId: "deleteAuthor"
+            parameters:
+                - $ref: "#/components/parameters/authorId"
+            responses:
+                "200":
+                    description: "OK"
+                "400":
+                  $ref: "#/components/responses/BadRequest"
+                "401":
+                  $ref: "#/components/responses/Unauthorized"
+            security:
+              - prod: [ ]
+  /user:
+    get:
+      tags:
+        - "User"
+      summary: "GET user"
+      operationId: "getAllUsers"
+      responses:
+        "200":
+          $ref: "#/componsnts/responses/UserList"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+    post:
+      tags:
+        - "User"
+      summary: "POST user"
+      operationId: "createUsers"
+      requestBody:
+        $ref: "#/components/requestBodies/CreateUser"
+      responses:
+        "201":
+          $ref: "#/componsnts/responses/CreateUser"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+      security:
+        - prod: [ ]
+  /user/{userId}:
+        get:
+            tags:
+            - "User"
+            summary: "GET user/{id}"
+            operationId: "getByIdUser"
+            parameters:
+              - $ref: "#/components/parameters/userId"
+            responses:
+              "200":
+                $ref: "#/componsnts/responses/User"
+              "400":
+                $ref: "#/components/responses/BadRequest"
+              "401":
+                $ref: "#/components/responses/Unauthorized"
+        put:
+            tags:
+            - "User"
+            summary: "PUT user/{id}"
+            operationId: "updateUser"
+            parameters:
+              - $ref: "#/components/parameters/userId"
+            requestBody:
+              $ref: "#/components/requestBodies/UpdateUser"
+            responses:
+              "200":
+                 $ref: "#/componsnts/responses/User"
+              "400":
+                  $ref: "#/components/responses/BadRequest"
+              "401":
+                  $ref: "#/components/responses/Unauthorized"
+            security:
+              - prod: [ ]
+        delete:
+            tags:
+            - "User"
+            summary: "DELETE user/{id}"
+            operationId: "deleteUser"
+            parameters:
+              - $ref: "#/components/parameters/userId"
+            responses:
+              "200":
+                $ref: "#/componsnts/responses/User"
+              "400":
+                $ref: "#/components/responses/BadRequest"
+              "401":
+                $ref: "#/components/responses/Unauthorized"
+            security:
+              - prod: [ ]
+components:
+  parameters:
+    bookId:
+      name: bookId
+      in: path
+      description: ID of book to return
+      required: true
+      schema:
+        type: integer
+        format: int64
+    authorId:
+        name: authorId
+        in: path
+        description: ID of author to return
+        required: true
+        schema:
+            type: integer
+            format: int64
+    userId:
+      name: userId
+      in: path
+      description: ID of user to return
+      required: true
+      schema:
+        type: integer
+        format: int64
+    cdId:
+      name: cdId
+      in: path
+      description: ID of cd to return
+      required: true
+      schema:
+        type: integer
+        format: int64
+
+  requestBodies:
+    CreateCd:
+      description: "Create cd"
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CreateCd"
+    UpdateCd:
+        description: "Update cd"
+        required: true
+        content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/UpdateCd"
+    CreateAuthor:
+      description: "Create author"
+      required: true
+      content:
+          application/json:
+            schema:
+                $ref: "#/components/schemas/CreateAuthor"
+    UpdateAuthor:
+      description: "Update author"
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UpdateAuthor"
+    CreateUser:
+      description: "Create user"
+      required: true
+      content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/CreateUser"
+    UpdateUser:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UpdateUser"
+    CreateBook:
+      description: "Create book"
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CreateBook"
+    UpdateBook:
+      description: "Update book"
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UpdateBook"
+
+  responses:
+    MediaList:
+      description: "OK"
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: "array"
+                items:
+                  $ref: "#/components/schemas/Book"
+              - type: "array"
+                items:
+                  $ref: "#/components/schemas/Cd"
+    BookList:
+      description: "OK"
+      content:
+        application/json:
+          schema:
+            type: "array"
+            items:
+              $ref: "#/components/schemas/Book"
+    Cd:
+      description: "OK"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Cd"
+    Book:
+      description: "OK"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Book"
+    CreateBook:
+      description: "Created"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CreateBook"
+    AuthorList:
+        description: "OK"
+        content:
+            application/json:
+              schema:
+                  type: "array"
+                  items:
+                    $ref: "#/components/schemas/Author"
+    Author:
+      description: "OK"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Author"
+    CreateAuthor:
+      description: "Created"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Author"
+
+    UserList:
+        description: "OK"
+        content:
+            application/json:
+              schema:
+                  type: "array"
+                  items:
+                    $ref: "#/components/schemas/User"
+    User:
+        description: "OK"
+        content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/User"
+    CreateUser:
+        description: "Created"
+        content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/User"
+
+    BadRequest:
+        description: "Bad Request"
+        content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/Error"
+    Unauthorized:
+        description: "Unauthorized"
+        content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/Error"
+  schemas:
+    CdDetail:
+        type: "object"
+        properties:
+          id:
+            type: "integer"
+            format: "int64"
+            example: 1234
+          modifiedAt:
+            type: "string"
+            format: "date-time"
+          createdAt:
+            type: "string"
+            format: "date-time"
+          title:
+            type: "string"
+            example: "The Lord of the Rings"
+          discription:
+            type: "string"
+            example: "Der erste Band der Trilogie"
+          artist:
+            type: "string"
+            example: "J.R.R. Tolkien"
+          label:
+              type: "string"
+              example: "Hörbuch"
+    Cd:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+          example: 1234
+        title:
+          type: "string"
+          example: "The Lord of the Rings"
+        discription:
+          type: "string"
+          example: "Der erste Band der Trilogie"
+        artist:
+          type: "string"
+          example: "J.R.R. Tolkien"
+        label:
+          type: "string"
+          example: "Hörbuch"
+    UpdateCd:
+      type: "object"
+      properties:
+        title:
+          type: "string"
+          example: "The Lord of the Rings"
+        discription:
+          type: "string"
+          example: "Der erste Band der Trilogie"
+        artist:
+          type: "string"
+          example: "J.R.R. Tolkien"
+        publisher:
+          type: "string"
+          example: "xyz-publisher"
+        label:
+          type: "string"
+          example: "Hörbuch"
+    CreateCd:
+      type: "object"
+      properties:
+        title:
+          type: "string"
+          example: "The Lord of the Rings"
+        discription:
+          type: "string"
+          example: "Der erste Band der Trilogie"
+        artist:
+          type: "string"
+          example: "J.R.R. Tolkien"
+        publisher:
+          type: "string"
+          example: "xyz-publisher"
+        label:
+          type: "string"
+          example: "Hörbuch"
+    BookDetail:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+          example: 1234
+        modifiedAt:
+          type: "string"
+          format: "date-time"
+        createdAt:
+          type: "string"
+          format: "date-time"
+        language:
+          type: "string"
+          example: "de"
+        title:
+          type: "string"
+          example: "The Lord of the Rings"
+        isbn:
+          type: "string"
+          example: "978-3-16-148410-0"
+        publisher:
+          type: "string"
+          example: "xyz-publisher"
+        releaseDate:
+          type: "string"
+          format: "date-time"
+        discription:
+          type: "string"
+          example: "Der erste Band der Trilogie"
+        author:
+          type: array
+          items:
+            $ref: "#/components/schemas/Author"
+        label:
+          type: "string"
+          example: "Hörbuch"
+    Book:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+          example: 1234
+        language:
+          type: "string"
+          example: "de"
+        title:
+          type: "string"
+          example: "The Lord of the Rings"
+        isbn:
+          type: "string"
+          example: "978-3-16-148410-0"
+        releaseDate:
+          type: "string"
+          format: "date-time"
+        discription:
+          type: "string"
+          example: "Der erste Band der Trilogie"
+        publisher:
+          type: "string"
+          example: "xyz-publisher"
+        author:
+          type: array
+          items:
+            $ref: "#/components/schemas/Author"
+        label:
+          type: "string"
+          example: "Hörbuch"
+    UpdateBook:
+      type: "object"
+      properties:
+        language:
+          type: "string"
+          example: "de"
+        title:
+          type: "string"
+          example: "The Lord of the Rings"
+        publisher:
+          type: "string"
+          example: "xyz-publisher"
+        isbn:
+          type: "string"
+          example: "978-3-16-148410-0"
+        discription:
+          type: "string"
+          example: "Der erste Band der Trilogie"
+
+    CreateBook:
+      type: "object"
+      properties:
+        language:
+          type: "string"
+          example: "de"
+        title:
+          type: "string"
+          example: "The Lord of the Rings"
+        publisher:
+          type: "string"
+          example: "xyz-publisher"
+        isbn:
+          type: "string"
+          example: "978-3-16-148410-0"
+        discription:
+          type: "string"
+          example: "Der erste Band der Trilogie"
+
+    Author:
+        type: "object"
+        properties:
+            id:
+              type: "integer"
+              format: "int64"
+            name:
+              type: "string"
+            surname:
+              type: "string"
+
+    CreateAuthor:
+        type: "object"
+        properties:
+            name:
+              type: "string"
+            surname:
+              type: "string"
+
+    UpdateAuthor:
+        type: "object"
+        properties:
+            name:
+              type: "string"
+            surname:
+              type: "string"
+
+    User:
+        type: "object"
+        properties:
+            id:
+              type: "integer"
+              format: "int64"
+              example: 1
+            name:
+              type: "string"
+              example: "Max"
+            surname:
+              type: "string"
+              example: "Mustermann"
+            email:
+              type: "string"
+              example: "max@musterman.de"
+
+    CreateUser:
+        type: "object"
+        properties:
+          name:
+            type: "string"
+            example: "Max"
+          surname:
+            type: "string"
+            example: "Mustermann"
+          email:
+            type: "string"
+            example: "max@musterman.de"
+
+    UpdateUser:
+        type: "object"
+        properties:
+          name:
+            type: "string"
+            example: "Max"
+          surname:
+            type: "string"
+            example: "Mustermann"
+          email:
+            type: "string"
+            example: "max@musterman.de"
+
+    Error:
+        type: "object"
+        properties:
+            message:
+              type: "string"
+              example: "Bad Request"
+
+  securitySchemes:
+    prod:
+      scheme: bearer
+      type: http
+      bearerFormat: JWT
